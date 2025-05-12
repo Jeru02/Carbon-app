@@ -4,82 +4,35 @@ import PostcodeForm from "./components/PostcodeForm";
 import ChartArea from "./components/ChartArea";
 
 function App() {
-  const [data, setData] = useState({
-    data: [
-      {
-        regionid: 10,
-        dnoregion: "UKPN East",
-        shortname: "East England",
-        postcode: "CM23",
-        data: [
-          {
-            from: "2025-05-12T10:30Z",
-            to: "2025-05-12T11:00Z",
-            intensity: {
-              forecast: 48,
-              index: "low",
-            },
-            generationmix: [
-              {
-                fuel: "biomass",
-                perc: 0,
-              },
-              {
-                fuel: "coal",
-                perc: 0,
-              },
-              {
-                fuel: "imports",
-                perc: 2.1,
-              },
-              {
-                fuel: "gas",
-                perc: 11.8,
-              },
-              {
-                fuel: "nuclear",
-                perc: 27.8,
-              },
-              {
-                fuel: "other",
-                perc: 0,
-              },
-              {
-                fuel: "hydro",
-                perc: 0,
-              },
-              {
-                fuel: "solar",
-                perc: 41,
-              },
-              {
-                fuel: "wind",
-                perc: 17.2,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  });
+  const [fuelData, setFuelData] = useState([{fuel: "biomass", perc: 20}]);
+  const [postcode, setPostcode] = useState("SW1A");
 
-  const [postcode, setPostcode] = useState("");
-
-  // useEffect(()=>{},[])
-
-  const handleChange = (e) => {
+  useEffect(()=>{
+    fetchAndSetFuelData()
+  },[])
+  
+  function fetchAndSetFuelData(){
+    fetch(`https://api.carbonintensity.org.uk/regional/postcode/${postcode}`)
+    .then((response) => {      
+      return response.json()
+    })
+    .then(({data}) => {
+      console.log(data[0].data[0].generationmix)
+      setFuelData(data[0].data[0].generationmix)
+    })    
+  }
+  
+  function handleChange(e){
+    e.preventDefault();
+  };
+  
+  function handleClick(e){
     e.preventDefault();
     setPostcode(e.target.value);
+    fetchAndSetFuelData();   
   };
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    setPostcode(e.target.value);
-
-    
-  };
-
-  return (
+  return (    
     <div>
       <PostcodeForm
         postcode={postcode}
@@ -88,7 +41,7 @@ function App() {
         handleClick={handleClick}
       />
 
-      <ChartArea postcode={postcode} />
+      <ChartArea fuelData={fuelData} postcode={postcode}/>
     </div>
   );
 }
