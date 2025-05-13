@@ -14,9 +14,9 @@ const ChartArea = (props) => {
 
  
   return (<div>
-    {props.displayGenerationMix ? <h2>Latest generation mix for {props.postcodeCopy}</h2> : null}
+    {props.displayGenerationMix ? <h3>Latest generation mix for {props.postcodeCopy}</h3> : <h3>View your local energy generation mix</h3>}
 
-    
+  
   </div>);
 
 };

@@ -2,7 +2,7 @@ function PostcodeForm(props){
   
   return (
     <form>
-      <label htmlFor="postcode-input">Enter Postcode </label>
+      <label htmlFor="postcode-input"><strong>Enter Postcode</strong> </label>
       <input
         className="postcode-input"
         type="text"
