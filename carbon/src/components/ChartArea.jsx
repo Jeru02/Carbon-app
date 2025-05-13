@@ -1,8 +1,22 @@
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  ArcElement,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { useState } from 'react';
+import { PolarArea } from 'react-chartjs-2';
+
+ChartJS.register(ArcElement, Tooltip, Legend, RadialLinearScale)
+
 const ChartArea = (props) => {
-   
+
+ 
   return (<div>
-    <h2>Latest generation mix for {props.postcode}</h2>
-    <p>{props.fuelData[0].fuel}: {props.fuelData[0].perc}</p>
+    {props.displayGenerationMix ? <h2>Latest generation mix for {props.postcodeCopy}</h2> : null}
+
+    
   </div>);
 
 };
