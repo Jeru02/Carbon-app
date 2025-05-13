@@ -24,12 +24,12 @@ function App() {
   
   function handleChange(e){
     e.preventDefault();
+    setPostcode(e.target.value);
   };
   
-  function handleClick(e){
+  function handleClick(e){    
     e.preventDefault();
-    setPostcode(e.target.value);
-    fetchAndSetFuelData();   
+    fetchAndSetFuelData();   //<--- this might be the problem
   };
 
   return (    
